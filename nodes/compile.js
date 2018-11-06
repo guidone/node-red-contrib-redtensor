@@ -1,25 +1,51 @@
 const _ = require('underscore');
 
+const isModel = require('../libs/helpers').isModel;
+const isOptimizer = require('../libs/helpers').isOptimizer;
+const extractValue = require('../libs/helpers').extractValue;
 
 module.exports = function(RED) {
   function RedTensorCompile(config) {
     RED.nodes.createNode(this, config);
-    var node = this;
+    const node = this;
+    node.debug = config.debug;
+
+    node.status({ fill: 'red', shape: 'ring', text: 'Missing Model, Optimizer' });
 
     this.on('input', function(msg) {
 
-      // todo check if payload is model
-      const model = msg.payload;
+      let model, optimizer;
 
+      model = extractValue('model', 'model', msg, node, { store: true });
+      optimizer = extractValue('optimizer', 'optimizer', msg, node, { store: true });
 
-      // todo loss should be another node
-      // todo optimizer should be another node
-      model.compile({loss: 'meanSquaredError', optimizer: 'sgd'});
+      // check what's missing
+      let missingElements = [];
+      if (!isModel(model)) {
+        missingElements.push('Model');
+      }
+      if (!isOptimizer(optimizer)) {
+        missingElements.push('Optimizer');
+      }
 
+      if (_.isEmpty(missingElements)) {
+        node.status({fill: 'green', shape: 'ring', text: 'All set'});
 
-      console.log('compiled');
+        // todo loss should be another node
+        model.compile({
+          loss: 'meanSquaredError',
+          optimizer: optimizer
+          //optimizer: 'sgd'
+        });
+        msg.payload = model;
 
-      node.send(msg);
+        if (node.debug) {
+          console.log(model.summary());
+        }
+
+        node.send(msg);
+      }
+
     });
   }
 

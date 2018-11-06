@@ -27,7 +27,8 @@
       "chatbot-redtensor-layer-dense": "./nodes/layer-dense.js",
       "chatbot-redtensor-train": "./nodes/train.js",
       "chatbot-redtensor-predict": "./nodes/predict.js",
-      "chatbot-redtensor-dump": "./nodes/dump.js"
+      "chatbot-redtensor-dump": "./nodes/dump.js",
+      "chatbot-redtensor-optimizer": "./nodes/optimizer.js"
     }
   },
   "maintainers": [

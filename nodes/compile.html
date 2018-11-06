@@ -6,12 +6,10 @@
       name: {
         value: ''
       },
-      buttons: {
-        value: []
+      debug: {
+        value: false
       },
-      message: {
-        value: ''
-      }
+
     },
     inputs: 1,
     outputs: 1,
@@ -19,22 +17,19 @@
     icon: 'icon-tensor-flow.png',
     label: function() {
       return this.name || 'Compile';
-    },
-
-    oneditsave: function() {
-
-    },
-    oneditprepare: function() {
-
-    },
-    oneditresize: function() {
-
     }
   });
 </script>
 
 <script type="text/x-red" data-template-name="redtensor-compile">
-
+<div class="form-row">
+  <label for="node-input-name">Name</label>
+  <input type="text" id="node-input-name" placeholder="Name">
+</div>
+<div class="form-row">
+  <label for="node-input-debug">Debug</label>
+  <input type="checkbox" value="true" id="node-input-debug">
+</div>
 </script>
 
 <script type="text/x-red" data-help-name="redtensor-compile">

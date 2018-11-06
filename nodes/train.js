@@ -16,8 +16,6 @@ module.exports = function(RED) {
 
     this.on('input', function(msg) {
 
-      // todo check if payload is model
-      const context = node.context();
 
       let model, tensorX, tensorY;
 
@@ -39,7 +37,7 @@ module.exports = function(RED) {
 
       if (_.isEmpty(missingElements)) {
         node.status({ fill: 'yellow', shape: 'ring', text: 'Training...' });
-        console.log('ok start training');
+
         model
           .fit(tensorX, tensorY, {
             epochs: node.epoch

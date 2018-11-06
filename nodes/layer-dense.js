@@ -8,14 +8,24 @@ module.exports = function(RED) {
     const node = this;
     node.units = parseInt(config.units, 10);
     node.inputDim = parseInt(config.inputDim, 10);
+    node.kernelInitializer = !_.isEmpty(config.kernelInitializer) ? config.kernelInitializer : undefined;
+    node.activation = !_.isEmpty(config.activation) ? config.activation : undefined;
+
 
     this.on('input', function(msg) {
 
       // todo check if payload is model
       const model = msg.payload;
+      const params = {
+        units: !isNaN(node.units) ? node.units : undefined,
+        inputShape: !isNaN(node.inputDim) ? [node.inputDim] : undefined,
+        activation: node.activation,
+        kernelInitializer: node.kernelInitializer
+      };
 
-      // todo add params units and inputShape
-      model.add(tf.layers.dense({units: node.units, inputShape: [node.inputDim]}));
+      console.log('DENSE LAYER', params);
+
+      model.add(tf.layers.dense(params));
 
       node.send(msg);
     });

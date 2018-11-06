@@ -1,0 +1,80 @@
+<script type="text/javascript">
+  RED.nodes.registerType('redtensor-optimizer', {
+    category: 'RedTensor',
+    color: '#FFCC66',
+    defaults: {
+      name: {
+        value: ''
+      },
+      optimizerType: {
+        value: []
+      },
+      learningRate: {
+        value: ''
+      }
+    },
+    inputs: 1,
+    outputs: 1,
+    paletteLabel: 'Optimizer',
+    icon: 'icon-tensor-flow.png',
+    label: function() {
+      return this.name || 'Optimizer';
+    },
+    oneditprepare: function() {
+      $('#node-input-optimizerType').change(function() {
+        var type = $(this).val();
+        $('.form-row-param').hide();
+        $('.form-row-param-' + type).show();
+      });
+      $('.form-row-param').hide();
+      $('.form-row-param-' + this.optimizerType).show();
+    }
+  });
+</script>
+
+<script type="text/x-red" data-template-name="redtensor-optimizer">
+<div class="form-row">
+  <label for="node-input-name"><i class="icon-tag"></i> Name</label>
+  <input type="text" id="node-input-name" placeholder="Name">
+</div>
+<div class="form-row">
+  <label for="node-input-optimizerType">Type</label>
+  <select id="node-input-optimizerType">
+    <option value="sgd">Stochastic Gradient Descent</option>
+    <option value="momentum">Momentum Gradient Descent</option>
+    <option value="adagrad">Adagrad</option>
+    <option value="adadelta">Adadelta</option>
+    <option value="adam">Adam</option>
+    <option value="adamax">Adamax</option>
+    <option value="rmsprop">RMSProp Gradient Descent</option>
+  </select>
+</div>
+<div class="form-row form-row-param form-row-param-sgd">
+  <label for="node-input-units">Learning Rate</label>
+  <input type="number" id="node-input-learningRate" step="0.001">
+</div>
+<div class="form-row form-row-param form-row-param-momentum">
+  Momentum not yet implemented!
+</div>
+<div class="form-row form-row-param form-row-param-adagrad">
+  Adagrad not yet implemented!
+</div>
+<div class="form-row form-row-param form-row-param-adadelta">
+  Adadelta not yet implemented!
+</div>
+<div class="form-row form-row-param form-row-param-adam">
+  Adam not yet implemented!
+</div>
+<div class="form-row form-row-param form-row-param-adamax">
+  Adamax not yet implemented!
+</div>
+<div class="form-row form-row-param form-row-param-rmsprop">
+  RMSProp Gradient Descent not yet implemented!
+</div>
+</script>
+
+<script type="text/x-red" data-help-name="redtensor-optimizer">
+  help on optimizer
+</script>
+
+

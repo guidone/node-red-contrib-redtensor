@@ -11,6 +11,12 @@
       },
       units: {
         value: ''
+      },
+      activation: {
+        value: ''
+      },
+      kernelInitializer: {
+        value: ''
       }
     },
     inputs: 1,
@@ -33,9 +39,45 @@
   <input type="number" id="node-input-units">
 </div>
 <div class="form-row">
+  <label for="node-input-activation">Activation</label>
+  <select id="node-input-activation">
+    <option value="">None</option>
+    <option value="elu">Elu</option>
+    <option value="hardSigmoid">hardSigmoid</option>
+    <option value="linear">linear</option>
+    <option value="relu">relu</option>
+    <option value="relu6">relu6</option>
+    <option value="selu">selu</option>
+    <option value="sigmoid">sigmoid</option>
+    <option value="softmax">softmax</option>
+    <option value="softplus">softplus</option>
+    <option value="softsign">softsign</option>
+    <option value="tanh">tanh</option>
+  </select>
+</div>
+<div class="form-row">
+  <label for="node-input-kernelInitializer">Kernel Initializer</label>
+  <select id="node-input-kernelInitializer">
+    <option value="">None</option>
+    <option value="constant">constant</option>
+    <option value="glorotNormal">glorotNormal</option>
+    <option value="heNormal">heNormal</option>
+    <option value="identity">identity</option>
+    <option value="leCunNormal">leCunNormal</option>
+    <option value="ones">ones</option>
+    <option value="orthogonal">orthogonal</option>
+    <option value="randomNormal">randomNormal</option>
+    <option value="randomUniform">randomUniform</option>
+    <option value="truncatedNormal">truncatedNormal</option>
+    <option value="varianceScaling">varianceScaling</option>
+    <option value="zeros">zeros</option>
+  </select>
+</div>
+<div class="form-row">
   <label for="node-input-inputDim">inputDim</label>
   <input type="number" id="node-input-inputDim">
 </div>
+
 </script>
 
 <script type="text/x-red" data-help-name="redtensor-layer-dense">

@@ -73,9 +73,9 @@ module.exports = function(RED) {
 
       //data = [ [ 1 ], [ 2 ], [ 3 ], [ 4 ] ];
 
-      console.log('---', msg.payload);
+      //console.log('---', msg.payload);
       //console.log('initializing with ', data, _.isArray(data), data.length, data[0], data[1], data[2], data[3]);
-      console.log('shape', shape);
+      //console.log('shape', shape);
 
       let tensor;
 
