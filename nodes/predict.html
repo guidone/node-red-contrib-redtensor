@@ -1,0 +1,35 @@
+<script type="text/javascript">
+  RED.nodes.registerType('redtensor-predict', {
+    category: 'RedTensor',
+    color: '#FFCC66',
+    defaults: {
+      name: {
+        value: ''
+      },
+      buttons: {
+        value: []
+      },
+      message: {
+        value: ''
+      }
+    },
+    inputs: 1,
+    outputs: 1,
+    paletteLabel: 'Predict',
+    //icon: 'chatbot-ask.png',
+    label: function() {
+      return this.name || 'Predict';
+    }
+  });
+</script>
+
+<script type="text/x-red" data-template-name="redtensor-predict">
+
+</script>
+
+<script type="text/x-red" data-help-name="redtensor-predict">
+
+  help on tensor
+</script>
+
+

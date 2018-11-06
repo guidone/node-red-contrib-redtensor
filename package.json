@@ -1,0 +1,60 @@
+{
+  "name": "node-red-contrib-redtensor",
+  "version": "0.0.1",
+  "description": "RED Tensor",
+  "scripts": {
+    "start": "node-red",
+    "test": "jest",
+    "test-ci": "jest --watch",
+    "ngrok": "ngrok http 127.0.0.1:1880",
+    "localtunnel": "lt --port 1880",
+    "lint": "eslint ./nodes/*.js ./lib",
+    "pull-wiki": "git clone https://github.com/guidone/node-red-contrib-chatbot.wiki.git ./wiki",
+    "commit-wiki": "git add . && git commit -m \"docs\"",
+    "build-docs": "git clone https://github.com/guidone/node-red-contrib-chatbot.wiki.git ./wiki && node ./bin/generate-docs && rm -rf ./wiki",
+    "clean": "rm -rf ./wiki",
+    "version": "git clone https://github.com/guidone/node-red-contrib-chatbot.wiki.git ./wiki && node ./bin/generate-docs && rm -rf ./wiki && git add *.html && git add *.md"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/guidone/node-red-contrib-chatbot.git"
+  },
+  "node-red": {
+    "nodes": {
+      "chatbot-redtensor-model": "./nodes/model.js",
+      "chatbot-redtensor-tensor": "./nodes/tensor.js",
+      "chatbot-redtensor-compile": "./nodes/compile.js",
+      "chatbot-redtensor-layer-dense": "./nodes/layer-dense.js",
+      "chatbot-redtensor-train": "./nodes/train.js",
+      "chatbot-redtensor-predict": "./nodes/predict.js"
+    }
+  },
+  "maintainers": [
+    {
+      "name": "Guido Bellomo",
+      "email": "guido.bellomo@gmail.com",
+      "web": "http://javascript-jedi.com"
+    }
+  ],
+  "keywords": [
+    "node-red"
+  ],
+  "author": "Guido Bellomo <guido.bellomo@gmail.com>",
+  "license": "ISC",
+  "dependencies": {
+    "@tensorflow/tfjs": "^0.13.3",
+    "@tensorflow/tfjs-node": "^0.1.19",
+    "cli-color": "^1.1.0",
+    "cli-table": "^0.3.1",
+    "moment": "^2.13.0",
+    "prettyjson": "^1.2.1",
+    "request": "^2.87.0",
+    "underscore.string": "^3.3.4"
+  },
+  "devDependencies": {
+    "chai": "^4.1.1",
+    "chai-spies": "^1.0.0",
+    "eslint": "^4.12.1",
+    "jest": "^22.0.6"
+  }
+}

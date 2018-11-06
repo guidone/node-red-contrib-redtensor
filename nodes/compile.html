@@ -1,0 +1,45 @@
+<script type="text/javascript">
+  RED.nodes.registerType('redtensor-compile', {
+    category: 'RedTensor',
+    color: '#FFCC66',
+    defaults: {
+      name: {
+        value: ''
+      },
+      buttons: {
+        value: []
+      },
+      message: {
+        value: ''
+      }
+    },
+    inputs: 1,
+    outputs: 1,
+    paletteLabel: 'Compile',
+    //icon: 'chatbot-ask.png',
+    label: function() {
+      return this.name || 'Compile';
+    },
+
+    oneditsave: function() {
+
+    },
+    oneditprepare: function() {
+
+    },
+    oneditresize: function() {
+
+    }
+  });
+</script>
+
+<script type="text/x-red" data-template-name="redtensor-compile">
+
+</script>
+
+<script type="text/x-red" data-help-name="redtensor-compile">
+
+  help on tensor
+</script>
+
+

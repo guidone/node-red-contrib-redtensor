@@ -1,0 +1,49 @@
+<script type="text/javascript">
+  RED.nodes.registerType('redtensor-train', {
+    category: 'RedTensor',
+    color: '#FFCC66',
+    defaults: {
+      name: {
+        value: ''
+      },
+      debug: {
+        value: false
+      }
+    },
+    inputs: 1,
+    outputs: 1,
+    paletteLabel: 'Train',
+    //icon: 'chatbot-ask.png',
+    label: function() {
+      return this.name || 'Train model';
+    },
+
+    oneditsave: function() {
+
+    },
+    oneditprepare: function() {
+
+    },
+    oneditresize: function() {
+
+    }
+  });
+</script>
+
+<script type="text/x-red" data-template-name="redtensor-train">
+<div class="form-row">
+  <label for="node-input-name">Name</label>
+  <input type="text" id="node-input-name" placeholder="Name">
+</div>
+<div class="form-row">
+  <label for="node-input-debug">Debug</label>
+  <input type="checkbox" value="true" id="node-input-debug">
+</div>
+</script>
+
+<script type="text/x-red" data-help-name="redtensor-train">
+
+  help on tensor
+</script>
+
+

@@ -1,0 +1,45 @@
+<script type="text/javascript">
+  RED.nodes.registerType('redtensor-layer-dense', {
+    category: 'RedTensor',
+    color: '#FFCC66',
+    defaults: {
+      name: {
+        value: ''
+      },
+      buttons: {
+        value: []
+      },
+      message: {
+        value: ''
+      }
+    },
+    inputs: 1,
+    outputs: 1,
+    paletteLabel: 'Layer Dense',
+    //icon: 'chatbot-ask.png',
+    label: function() {
+      return this.name || 'Layer Dense';
+    },
+
+    oneditsave: function() {
+
+    },
+    oneditprepare: function() {
+
+    },
+    oneditresize: function() {
+
+    }
+  });
+</script>
+
+<script type="text/x-red" data-template-name="redtensor-layer-dense">
+
+</script>
+
+<script type="text/x-red" data-help-name="redtensor-layer-dense">
+
+  layer dense
+</script>
+
+

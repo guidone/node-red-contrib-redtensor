@@ -1,0 +1,169 @@
+<script type="text/javascript">
+  RED.nodes.registerType('redtensor-tensor', {
+    category: 'RedTensor',
+    color: '#FFCC66',
+    defaults: {
+      name: {
+        value: ''
+      },
+      tensorInput: {
+        value: '',
+      },
+      tensorType: {
+        value: 'tensor'
+      },
+      dim1: {
+        value: ''
+      },
+      dim2: {
+        value: ''
+      },
+      dim3: {
+        value: ''
+      },
+      dim4: {
+        value: ''
+      },
+      dim5: {
+        value: ''
+      },
+      dim6: {
+        value: ''
+      },
+      debug: {
+        value: false
+      }
+    },
+    inputs: 1,
+    outputs: 1,
+    paletteLabel: 'Tensor',
+    label: function() {
+      var name = this.name || 'Tensor';
+      if (this.tensorType === 'x') {
+        name += ' (X)';
+      } else if (this.tensorType === 'y') {
+        name += ' (Y)';
+      }
+      return name;
+    },
+    oneditprepare: function() {
+      $('#node-input-tensorType')
+        .change(function() {
+          var tensorType = $(this).val();
+          $('.form-row-shape .shape').hide();
+          $('.form-row-shape .shape-' + tensorType).show();
+        });
+      if (this.tensorType === 'tensor') { // show all
+        $('.form-row-shape .shape').show();
+      } else {
+        $('.form-row-shape .shape').hide();
+        $('.form-row-shape .shape-' + this.tensorType).show();
+        /*if (this.shape != null && this.shape.length !== 0) {
+          for (var i = 0; i < this.shape.length; i++) {
+            $('#node-input-dim' + (i + 1)).val(this.shape[i]);
+          }
+        }*/
+      }
+    },
+    oneditsave: function() {
+      /*var toDim = null;
+      var shape = null;
+      switch(this.tensorType) {
+        case 'tensor':
+        case 'tensor6d':
+          toDim = 6;
+          break;
+        case 'tensor5d':
+          toDim = 5;
+          break;
+        case 'tensor4d':
+          toDim = 4;
+          break;
+        case 'tensor3d':
+          toDim = 3;
+          break;
+        case 'tensor2d':
+          toDim = 2;
+          break;
+        case 'tensor1d':
+          toDim = null;
+      }
+      if (toDim != null) {
+        shape = [];
+        for(var i = 1; i <= toDim; i++) {
+          shape.push(parseInt($('#node-input-dim' + i).val(), 10));
+        }
+        var invalid = false;
+        for(var i = 1; i <= toDim; i++) {
+          if (isNaN(shape[i]))
+        }
+      }
+      console.log('shape', shape);
+      this.shape = shape;
+      */
+    }
+  });
+</script>
+
+<script type="text/x-red" data-template-name="redtensor-tensor">
+<div class="form-row">
+  <label for="node-input-name">Name</label>
+  <input type="text" id="node-input-name" placeholder="Name">
+</div>
+<div class="form-row">
+  <label for="node-input-tensorInput">X/Y</label>
+  <select id="node-input-tensorInput">
+    <option value="">Not specified</option>
+    <option value="x">Tensor X (input)</option>
+    <option value="y">Tensor Y (output)</option>
+  </select>
+</div>
+<div class="form-row">
+  <label for="node-input-tensorType">Type</label>
+  <select id="node-input-tensorType">
+    <option value="tensor">Tensor</option>
+    <option value="tensor1d">Tensor1d</option>
+    <option value="tensor2d">Tensor2d</option>
+    <option value="tensor3d">Tensor3d</option>
+    <option value="tensor4d">Tensor4d</option>
+    <option value="tensor5d">Tensor5d</option>
+    <option value="tensor6d">Tensor6d</option>
+  </select>
+</div>
+<div class="form-row form-row-shape">
+  <label for="node-input-name">Shape</label>
+  <input type="number" id="node-input-dim1" style="width: 60px">
+  <span class="shape shape-tensor2d shape-tensor3d shape-tensor4d shape-tensor5d shape-tensor6d">
+    <span>&times;</span>
+    <input type="number" id="node-input-dim2" style="width: 60px">
+  </span>
+  <span class="shape shape-tensor3d shape-tensor4d shape-tensor5d shape-tensor6d">
+    <span>&times;</span>
+    <input type="number" id="node-input-dim3" style="width: 60px">
+  </span>
+  <span class="shape shape-tensor4d shape-tensor5d shape-tensor6d">
+    <span>&times;</span>
+    <input type="number" id="node-input-dim4" style="width: 60px">
+  </span>
+  <span class="shape shape-tensor5d shape-tensor6d">
+    <span>&times;</span>
+    <input type="number" id="node-input-dim5" style="width: 60px">
+  </span>
+  <span class="shape shape-tensor6d">
+    <span>&times;</span>
+    <input type="number" id="node-input-dim6" style="width: 60px">
+  </span>
+
+</div>
+<div class="form-row">
+  <label for="node-input-debug">Debug</label>
+  <input type="checkbox" value="true" id="node-input-debug">
+</div>
+</script>
+
+<script type="text/x-red" data-help-name="redtensor-tensor">
+
+  help on tensor
+</script>
+
+
