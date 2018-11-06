@@ -5,7 +5,9 @@ require('@tensorflow/tfjs-node');
 module.exports = function(RED) {
   function RedTensorLayerDense(config) {
     RED.nodes.createNode(this, config);
-    var node = this;
+    const node = this;
+    node.units = parseInt(config.units, 10);
+    node.inputDim = parseInt(config.inputDim, 10);
 
     this.on('input', function(msg) {
 
@@ -13,7 +15,7 @@ module.exports = function(RED) {
       const model = msg.payload;
 
       // todo add params units and inputShape
-      model.add(tf.layers.dense({units: 1, inputShape: [1]}));
+      model.add(tf.layers.dense({units: node.units, inputShape: [node.inputDim]}));
 
       node.send(msg);
     });

@@ -27,7 +27,6 @@ module.exports = function(RED) {
       if (_.isArray(msg.payload)) {
         // this is magic
         data = cloneArray(msg.payload);
-        console.log('cloned', data);
       }
 
       // exit if data is null

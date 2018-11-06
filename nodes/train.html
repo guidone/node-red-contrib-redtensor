@@ -8,12 +8,15 @@
       },
       debug: {
         value: false
+      },
+      epoch: {
+        value: 10
       }
     },
     inputs: 1,
     outputs: 1,
     paletteLabel: 'Train',
-    //icon: 'chatbot-ask.png',
+    icon: 'icon-tensor-flow.png',
     label: function() {
       return this.name || 'Train model';
     },
@@ -34,6 +37,10 @@
 <div class="form-row">
   <label for="node-input-name">Name</label>
   <input type="text" id="node-input-name" placeholder="Name">
+</div>
+<div class="form-row">
+  <label for="node-input-name">Epoch</label>
+  <input type="number" id="node-input-epoch">
 </div>
 <div class="form-row">
   <label for="node-input-debug">Debug</label>

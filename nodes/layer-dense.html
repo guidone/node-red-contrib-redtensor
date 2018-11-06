@@ -6,35 +6,36 @@
       name: {
         value: ''
       },
-      buttons: {
-        value: []
+      inputDim: {
+        value: ''
       },
-      message: {
+      units: {
         value: ''
       }
     },
     inputs: 1,
     outputs: 1,
     paletteLabel: 'Layer Dense',
-    //icon: 'chatbot-ask.png',
+    icon: 'icon-tensor-flow.png',
     label: function() {
       return this.name || 'Layer Dense';
-    },
-
-    oneditsave: function() {
-
-    },
-    oneditprepare: function() {
-
-    },
-    oneditresize: function() {
-
     }
   });
 </script>
 
 <script type="text/x-red" data-template-name="redtensor-layer-dense">
-
+<div class="form-row">
+  <label for="node-input-name">Name</label>
+  <input type="text" id="node-input-name" placeholder="Name">
+</div>
+<div class="form-row">
+  <label for="node-input-units">Units</label>
+  <input type="number" id="node-input-units">
+</div>
+<div class="form-row">
+  <label for="node-input-inputDim">inputDim</label>
+  <input type="number" id="node-input-inputDim">
+</div>
 </script>
 
 <script type="text/x-red" data-help-name="redtensor-layer-dense">

@@ -37,11 +37,12 @@
     inputs: 1,
     outputs: 1,
     paletteLabel: 'Tensor',
+    icon: 'icon-tensor-flow.png',
     label: function() {
       var name = this.name || 'Tensor';
-      if (this.tensorType === 'x') {
+      if (this.tensorInput === 'x') {
         name += ' (X)';
-      } else if (this.tensorType === 'y') {
+      } else if (this.tensorInput === 'y') {
         name += ' (Y)';
       }
       return name;

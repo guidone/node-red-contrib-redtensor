@@ -10,6 +10,7 @@ module.exports = function(RED) {
     RED.nodes.createNode(this, config);
     var node = this;
     node.debug = config.debug;
+    node.epoch = config.epoch;
 
     node.status({ fill: 'red', shape: 'ring', text: 'Missing Model, Tensor X, Tensor Y' });
 
@@ -39,7 +40,10 @@ module.exports = function(RED) {
       if (_.isEmpty(missingElements)) {
         node.status({ fill: 'yellow', shape: 'ring', text: 'Training...' });
         console.log('ok start training');
-        model.fit(tensorX, tensorY, { epochs: 10 })
+        model
+          .fit(tensorX, tensorY, {
+            epochs: node.epoch
+          })
           .then(() => {
             // debug
             if (node.debug && model != null) {
