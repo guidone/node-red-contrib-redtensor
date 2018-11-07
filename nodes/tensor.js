@@ -68,7 +68,7 @@ module.exports = function(RED) {
         }
       }
 
-      // todo deep clone an array, for some reason the passed array is not good
+
 
 
       //data = [ [ 1 ], [ 2 ], [ 3 ], [ 4 ] ];
@@ -88,17 +88,13 @@ module.exports = function(RED) {
       }
       // debug
       if (node.debug && tensor != null) {
-        console.log(tensor.print());
+        tensor.print();
       }
       // assign to input or output
       if (node.tensorInput === 'x') {
-        msg.payload = {
-          tensorX: tensor
-        };
+        msg.tensorX = tensor;
       } else if (node.tensorInput === 'y') {
-        msg.payload = {
-          tensorY: tensor
-        };
+        msg.tensorY = tensor;
       } else {
         msg.payload = tensor;
       }

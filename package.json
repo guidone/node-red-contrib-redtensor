@@ -28,7 +28,8 @@
       "chatbot-redtensor-train": "./nodes/train.js",
       "chatbot-redtensor-predict": "./nodes/predict.js",
       "chatbot-redtensor-dump": "./nodes/dump.js",
-      "chatbot-redtensor-optimizer": "./nodes/optimizer.js"
+      "chatbot-redtensor-optimizer": "./nodes/optimizer.js",
+      "chatbot-redtensor-transform": "./nodes/transform.js"
     }
   },
   "maintainers": [

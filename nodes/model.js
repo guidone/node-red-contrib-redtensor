@@ -18,6 +18,8 @@ require('@tensorflow/tfjs-node');
   Example Boston Housing
   https://github.com/tensorflow/tfjs-examples/blob/master/boston-housing/data.js
 
+  Dashboard charts
+  https://github.com/node-red/node-red-dashboard/blob/master/Charts.md
 
 */
 

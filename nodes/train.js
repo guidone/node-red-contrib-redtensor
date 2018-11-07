@@ -12,8 +12,8 @@ module.exports = function(RED) {
     node.debug = config.debug;
     node.epochs = config.epochs;
     node.verbose = !isNaN(parseInt(config.verbose, 10)) ? parseInt(config.verbose, 10) : 1;
-    node.batchSize = config.batchSize;
-    node.validationSplit = config.validationSplit;
+    node.batchSize = !isNaN(parseInt(config.batchSize, 10)) ? parseInt(config.batchSize, 10) : null;
+    node.validationSplit = !isNaN(parseFloat(config.validationSplit)) ? parseFloat(config.validationSplit) : null;
 
     node.status({ fill: 'red', shape: 'ring', text: 'Missing Model, Tensor X, Tensor Y' });
 
@@ -41,6 +41,7 @@ module.exports = function(RED) {
       if (_.isEmpty(missingElements)) {
         node.status({ fill: 'yellow', shape: 'ring', text: `Training... 0/${node.epochs}` });
 
+
         const params = {
           epochs: node.epochs,
           verbose: _.isNumber(node.verbose) ? node.verbose : undefined,
@@ -48,7 +49,9 @@ module.exports = function(RED) {
           validationSplit: _.isNumber(node.validationSplit) ? node.validationSplit : undefined,
         };
 
-        console.log('train value', params);
+        console.log('Train params', params);
+        console.log(_.isNumber(node.batchSize), node.batchSize);
+        console.log(_.isNumber(node.validationSplit), node.validationSplit);
 
         // set callbacks
         params.callbacks = {

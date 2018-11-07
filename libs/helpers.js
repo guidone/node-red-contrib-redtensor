@@ -45,6 +45,11 @@ const helper = {
         node.context().set(name, msg.payload);
       }
       return msg.payload;
+    } else if (msg != null && validator(msg[name])) {
+      if (options.store) {
+        node.context().set(name, msg[name]);
+      }
+      return msg[name];
     } else if (msg != null && msg.payload != null && validator(msg.payload[name])) {
       if (options.store) {
         node.context().set(name, msg.payload[name]);

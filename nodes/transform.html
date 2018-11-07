@@ -1,0 +1,42 @@
+<script type="text/javascript">
+  RED.nodes.registerType('redtensor-transform', {
+    category: 'RedTensor',
+    color: '#FFCC66',
+    defaults: {
+      name: {
+        value: ''
+      },
+      transformation: {
+        value: ''
+      }
+    },
+    inputs: 1,
+    outputs: 1,
+    paletteLabel: 'Transform',
+    icon: 'icon-tensor-flow.png',
+    label: function() {
+      return 'Transform';
+    },
+
+  });
+</script>
+
+<script type="text/x-red" data-template-name="redtensor-transform">
+<div class="form-row">
+  <label for="node-input-name"><i class="icon-tag"></i> Name</label>
+  <input type="text" id="node-input-name" placeholder="Name">
+</div>
+<div class="form-row">
+  <label for="node-input-transformation">Transformation</label>
+  <select id="node-input-transformation">
+    <option value="normalize">Normalize</option>
+  </select>
+</div>
+</script>
+
+<script type="text/x-red" data-help-name="redtensor-transform">
+
+  layer dense
+</script>
+
+
