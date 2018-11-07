@@ -8,9 +8,12 @@ const extractValue = require('../libs/helpers').extractValue;
 module.exports = function(RED) {
   function RedTensorTrain(config) {
     RED.nodes.createNode(this, config);
-    var node = this;
+    const node = this;
     node.debug = config.debug;
-    node.epoch = config.epoch;
+    node.epochs = config.epochs;
+    node.verbose = !isNaN(parseInt(config.verbose, 10)) ? parseInt(config.verbose, 10) : 1;
+    node.batchSize = config.batchSize;
+    node.validationSplit = config.validationSplit;
 
     node.status({ fill: 'red', shape: 'ring', text: 'Missing Model, Tensor X, Tensor Y' });
 
@@ -36,12 +39,27 @@ module.exports = function(RED) {
       }
 
       if (_.isEmpty(missingElements)) {
-        node.status({ fill: 'yellow', shape: 'ring', text: 'Training...' });
+        node.status({ fill: 'yellow', shape: 'ring', text: `Training... 0/${node.epochs}` });
 
+        const params = {
+          epochs: node.epochs,
+          verbose: _.isNumber(node.verbose) ? node.verbose : undefined,
+          batchSize: _.isNumber(node.batchSize) ? node.batchSize : undefined,
+          validationSplit: _.isNumber(node.validationSplit) ? node.validationSplit : undefined,
+        };
+
+        console.log('train value', params);
+
+        // set callbacks
+        params.callbacks = {
+          onEpochEnd: async (epoch, logs) => {
+            node.status({ fill: 'yellow', shape: 'ring', text: `Training... ${epoch}/${node.epochs}` });
+            msg.payload = { epoch, logs };
+            node.send([null, msg]);
+          }
+        };
         model
-          .fit(tensorX, tensorY, {
-            epochs: node.epoch
-          })
+          .fit(tensorX, tensorY, params)
           .then(() => {
             // debug
             if (node.debug && model != null) {
@@ -51,7 +69,7 @@ module.exports = function(RED) {
             node.status({ fill: 'green', shape: 'ring', text: 'All set' });
             // prepare payload
             msg.payload = model;
-            node.send(msg);
+            node.send([msg, null]);
           });
       } else {
         node.status({ fill: 'red', shape: 'ring', text: `Missing ${missingElements.join(', ')}` });
@@ -59,8 +77,8 @@ module.exports = function(RED) {
         if (node.debug && model != null) {
           console.log(model.summary(160))
         }
+        // do nothing
       }
-
     });
   }
 

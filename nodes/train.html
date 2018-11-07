@@ -9,26 +9,25 @@
       debug: {
         value: false
       },
-      epoch: {
+      epochs: {
         value: 10
+      },
+      batchSize: {
+        value: 32
+      },
+      verbose: {
+        value: '1'
+      },
+      validationSplit: {
+        value: ''
       }
     },
     inputs: 1,
-    outputs: 1,
+    outputs: 2,
     paletteLabel: 'Train',
     icon: 'icon-tensor-flow.png',
     label: function() {
       return this.name || 'Train model';
-    },
-
-    oneditsave: function() {
-
-    },
-    oneditprepare: function() {
-
-    },
-    oneditresize: function() {
-
     }
   });
 </script>
@@ -39,8 +38,24 @@
   <input type="text" id="node-input-name" placeholder="Name">
 </div>
 <div class="form-row">
-  <label for="node-input-name">Epoch</label>
-  <input type="number" id="node-input-epoch">
+  <label for="node-input-name">Epochs</label>
+  <input type="number" id="node-input-epochs">
+</div>
+<div class="form-row">
+  <label for="node-input-name">Batch Size</label>
+  <input type="number" id="node-input-batchSize">
+</div>
+<div class="form-row">
+  <label for="node-input-verbose">Verbose</label>
+  <select id="node-input-verbose">
+    <option value="0">None</option>
+    <option value="1">Verbose</option>
+    <option value="2">Very verbose</option>
+  </select>
+</div>
+<div class="form-row">
+  <label for="node-input-units">Validation Split</label>
+  <input type="number" id="node-input-validationSplit" step="0.001">
 </div>
 <div class="form-row">
   <label for="node-input-debug">Debug</label>

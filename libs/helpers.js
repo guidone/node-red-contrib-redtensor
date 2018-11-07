@@ -7,11 +7,7 @@ const helper = {
 
   isModel: model => _.isObject(model) && _.isFunction(model.predict),
   isTensor: tensor => tensor instanceof tf.Tensor,
-  isOptimizer: optimizer => {
-    console.log('controllo', optimizer);
-    console.log('cft', tf.Optimizer);
-    return optimizer instanceof tf.Optimizer
-  },
+  isOptimizer: optimizer => optimizer instanceof tf.Optimizer,
 
   /**
    * @method cloneArray
