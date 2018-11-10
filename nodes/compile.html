@@ -9,7 +9,9 @@
       debug: {
         value: false
       },
-
+      optimizer: {
+        value: ''
+      }
     },
     inputs: 1,
     outputs: 1,
@@ -25,6 +27,19 @@
 <div class="form-row">
   <label for="node-input-name">Name</label>
   <input type="text" id="node-input-name" placeholder="Name">
+</div>
+<div class="form-row">
+  <label for="node-input-optimizer">Type</label>
+  <select id="node-input-optimizer">
+    <option value="">Select optimizer</option>
+    <option value="sgd">Stochastic Gradient Descent</option>
+    <option value="momentum">Momentum Gradient Descent</option>
+    <option value="adagrad">Adagrad</option>
+    <option value="adadelta">Adadelta</option>
+    <option value="adam">Adam</option>
+    <option value="adamax">Adamax</option>
+    <option value="rmsprop">RMSProp Gradient Descent</option>
+  </select>
 </div>
 <div class="form-row">
   <label for="node-input-debug">Debug</label>

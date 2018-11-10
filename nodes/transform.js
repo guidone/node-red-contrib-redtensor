@@ -69,7 +69,7 @@ module.exports = function(RED) {
         case 'identity':
           // do nothing
           break;
-        case 'shuffle':
+        case 'shuffle2':
           storeIn = null; // do not store
           const trainTensor = msg.tensorX;
           const targetTensor = msg.tensorY;
@@ -92,7 +92,7 @@ module.exports = function(RED) {
           break;
 
         // similar but doesn't really change
-        case 'shuffle2':
+        case 'shuffle':
 
           const trainData = cloneArray(msg.trainData);
           const targetData = cloneArray(msg.targetData);

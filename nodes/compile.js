@@ -3,14 +3,21 @@ const _ = require('underscore');
 const isModel = require('../libs/helpers').isModel;
 const isOptimizer = require('../libs/helpers').isOptimizer;
 const extractValue = require('../libs/helpers').extractValue;
+const tf = require('@tensorflow/tfjs');
 
 module.exports = function(RED) {
   function RedTensorCompile(config) {
     RED.nodes.createNode(this, config);
     const node = this;
     node.debug = config.debug;
+    node.optimizer = config.optimizer;
 
-    node.status({ fill: 'red', shape: 'ring', text: 'Missing Model, Optimizer' });
+    // evaluate the missing elements at startup
+    let missingElements = ['Model'];
+    if (!isOptimizer(node.optimizer)) {
+      missingElements.push('Optimizer');
+    }
+    node.status({ fill: 'red', shape: 'ring', text: `Missing ${missingElements.join(', ')}` });
 
     this.on('input', function(msg) {
 

@@ -3,11 +3,18 @@ const _ = require('underscore');
 const tf = require('@tensorflow/tfjs');
 require('@tensorflow/tfjs-node');
 
+const optimizers = ['sgd','momentum','adagrad','adadelta','adam','adamax','rmsprop'];
+
 const helper = {
 
   isModel: model => _.isObject(model) && _.isFunction(model.predict),
   isTensor: tensor => tensor instanceof tf.Tensor,
-  isOptimizer: optimizer => optimizer instanceof tf.Optimizer,
+  isOptimizer: optimizer => {
+    return optimizer instanceof tf.Optimizer || (_.isString(optimizer) && optimizers.indexOf(optimizer) !== -1);
+  },
+  isLoss: loss => {
+    return false;
+  },
 
   /**
    * @method cloneArray
@@ -40,7 +47,9 @@ const helper = {
       return null;
     }
 
-    if (options.usePayload && msg != null && validator(msg.payload)) {
+    if (validator(node[name])) {
+      return node[name];
+    } else if (options.usePayload && msg != null && validator(msg.payload)) {
       if (options.store) {
         node.context().set(name, msg.payload);
       }

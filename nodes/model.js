@@ -32,13 +32,20 @@ require('@tensorflow/tfjs-node');
 module.exports = function(RED) {
   function RedTensorModel(config) {
     RED.nodes.createNode(this, config);
-    var node = this;
+    const node = this;
+    node.modelType = config.modelType;
 
     this.on('input', function(msg) {
 
-      // todo implement different type of model
-      const model = tf.sequential();
-
+      let model;
+      switch(node.modelType) {
+        case 'model':
+          model = tf.model();
+          break;
+        case 'sequential':
+          model = tf.sequential();
+          break;
+      }
 
       msg.payload = model;
       node.send(msg);

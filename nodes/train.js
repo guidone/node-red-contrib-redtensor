@@ -8,7 +8,7 @@ module.exports = function(RED) {
     RED.nodes.createNode(this, config);
     const node = this;
     node.debug = config.debug;
-    node.epochs = config.epochs;
+    node.epochs = !isNaN(parseInt(config.epochs, 10)) ? parseInt(config.epochs, 10) : null;
     node.verbose = !isNaN(parseInt(config.verbose, 10)) ? parseInt(config.verbose, 10) : 1;
     node.batchSize = !isNaN(parseInt(config.batchSize, 10)) ? parseInt(config.batchSize, 10) : null;
     node.validationSplit = !isNaN(parseFloat(config.validationSplit)) ? parseFloat(config.validationSplit) : null;
@@ -47,8 +47,11 @@ module.exports = function(RED) {
 
         const params = {
           epochs: node.epochs,
-          //verbose: _.isNumber(node.verbose) ? node.verbose : undefined,
-          verbose: 2,
+          //epochs: 200,
+          //batchSize: 40,
+          //validationSplit: 0.2,
+          verbose: _.isNumber(node.verbose) ? node.verbose : undefined,
+          //verbose: 2,
           batchSize: _.isNumber(node.batchSize) ? node.batchSize : undefined,
           validationSplit: _.isNumber(node.validationSplit) ? node.validationSplit : undefined,
         };
@@ -67,9 +70,9 @@ module.exports = function(RED) {
           .fit(tensorX, tensorY, params)
           .then(() => {
             // debug
-            if (node.debug && model != null) {
-              model.summary(160);
-            }
+            //if (node.debug && model != null) {
+            //  model.summary(160);
+            //}
             // show status in UI
             node.status({ fill: 'green', shape: 'ring', text: 'All set' });
             // prepare payload
@@ -83,9 +86,9 @@ module.exports = function(RED) {
       } else {
         node.status({ fill: 'red', shape: 'ring', text: `Missing ${missingElements.join(', ')}` });
         // debug
-        if (node.debug && model != null) {
-          model.summary(160);
-        }
+        //if (node.debug && model != null) {
+        //  model.summary(160);
+        //}
         // do nothing
       }
     });
