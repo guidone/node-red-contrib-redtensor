@@ -35,17 +35,15 @@ module.exports = function(RED) {
         model.compile({
           loss: 'meanSquaredError',
           optimizer: optimizer
-          //optimizer: 'sgd'
         });
         msg.payload = model;
 
         if (node.debug) {
-          console.log(model.summary());
+          model.summary();
         }
 
         node.send(msg);
       }
-
     });
   }
 

@@ -18,8 +18,14 @@ require('@tensorflow/tfjs-node');
   Example Boston Housing
   https://github.com/tensorflow/tfjs-examples/blob/master/boston-housing/data.js
 
+  Example Iris classification problem
+  https://www.tensorflow.org/tutorials/eager/custom_training_walkthrough
+
   Dashboard charts
   https://github.com/node-red/node-red-dashboard/blob/master/Charts.md
+
+  Overfitting
+  https://www.tensorflow.org/tutorials/keras/overfit_and_underfit
 
 */
 
