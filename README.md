@@ -1,4 +1,5 @@
-![RedTensor](./images/red_tensor_logo.png)
+<p align="center">
+<img src="./images/red_tensor_logo.png">
+</p>
 
-# node-red-contrib-redtensor
-Experimental tensorflow
+TBD
