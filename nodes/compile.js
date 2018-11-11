@@ -2,6 +2,7 @@ const _ = require('underscore');
 
 const isModel = require('../libs/helpers').isModel;
 const isOptimizer = require('../libs/helpers').isOptimizer;
+const isLoss = require('../libs/helpers').isLoss;
 const extractValue = require('../libs/helpers').extractValue;
 const tf = require('@tensorflow/tfjs');
 
@@ -11,20 +12,25 @@ module.exports = function(RED) {
     const node = this;
     node.debug = config.debug;
     node.optimizer = config.optimizer;
+    node.loss = config.loss;
 
     // evaluate the missing elements at startup
     let missingElements = ['Model'];
     if (!isOptimizer(node.optimizer)) {
       missingElements.push('Optimizer');
     }
+    if (!isLoss(node.loss)) {
+      missingElements.push('Loss');
+    }
     node.status({ fill: 'red', shape: 'ring', text: `Missing ${missingElements.join(', ')}` });
 
     this.on('input', function(msg) {
 
-      let model, optimizer;
+      let model, optimizer, loss;
 
       model = extractValue('model', 'model', msg, node, { store: true });
       optimizer = extractValue('optimizer', 'optimizer', msg, node, { store: true });
+      loss = extractValue('loss', 'loss', msg, node, { store: true });
 
       // check what's missing
       let missingElements = [];
@@ -34,13 +40,15 @@ module.exports = function(RED) {
       if (!isOptimizer(optimizer)) {
         missingElements.push('Optimizer');
       }
+      if (!isLoss(loss)) {
+        missingElements.push('Loss');
+      }
 
       if (_.isEmpty(missingElements)) {
         node.status({fill: 'green', shape: 'ring', text: 'All set'});
 
-        // todo loss should be another node
         model.compile({
-          loss: 'meanSquaredError',
+          loss: loss,
           optimizer: optimizer
         });
         msg.payload = model;

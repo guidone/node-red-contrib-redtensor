@@ -4,6 +4,16 @@ const tf = require('@tensorflow/tfjs');
 require('@tensorflow/tfjs-node');
 
 const optimizers = ['sgd','momentum','adagrad','adadelta','adam','adamax','rmsprop'];
+const losses = [
+  'absoluteDifference',
+  'computeWeightedLoss',
+  'cosineDistance',
+  'hingeLoss',
+  'huberLoss',
+  'meanSquaredError',
+  'sigmoidCrossEntropy',
+  'softmaxCrossEntropy'
+];
 
 const helper = {
 
@@ -13,7 +23,8 @@ const helper = {
     return optimizer instanceof tf.Optimizer || (_.isString(optimizer) && optimizers.indexOf(optimizer) !== -1);
   },
   isLoss: loss => {
-    return false;
+    // todo add here loss classes
+    return (_.isString(loss) && losses.indexOf(loss) !== -1);
   },
 
   /**
@@ -41,6 +52,9 @@ const helper = {
         break;
       case 'optimizer':
         validator = helper.isOptimizer;
+        break;
+      case 'loss':
+        validator = helper.isLoss;
         break;
     }
     if (validator == null) {

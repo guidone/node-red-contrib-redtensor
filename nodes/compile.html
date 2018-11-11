@@ -10,7 +10,10 @@
         value: false
       },
       optimizer: {
-        value: ''
+        value: 'sgd'
+      },
+      loss: {
+        value: 'meanSquaredError'
       }
     },
     inputs: 1,
@@ -39,6 +42,20 @@
     <option value="adam">Adam</option>
     <option value="adamax">Adamax</option>
     <option value="rmsprop">RMSProp Gradient Descent</option>
+  </select>
+</div>
+<div class="form-row">
+  <label for="node-input-loss">Loss</label>
+  <select id="node-input-loss">
+    <option value="">Select loss</option>
+    <option value="absoluteDifference">Absolute Difference</option>
+    <option value="computeWeightedLoss">Compute Weighted Loss</option>
+    <option value="cosineDistance">Cosine Distance</option>
+    <option value="hingeLoss">Hinge Loss</option>
+    <option value="huberLoss">Huber Loss</option>
+    <option value="meanSquaredError">Mean Squared Error</option>
+    <option value="sigmoidCrossEntropy">Sigmoid Cross Entropy</option>
+    <option value="softmaxCrossEntropy">Softmax Cross Entropy</option>
   </select>
 </div>
 <div class="form-row">
