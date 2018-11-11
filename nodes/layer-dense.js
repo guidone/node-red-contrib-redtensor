@@ -23,7 +23,7 @@ module.exports = function(RED) {
         kernelInitializer: node.kernelInitializer
       };
 
-      console.log('DENSE LAYER', params);
+      //console.log('DENSE LAYER', params);
 
       model.add(tf.layers.dense(params));
 

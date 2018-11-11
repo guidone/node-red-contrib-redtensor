@@ -1,7 +1,7 @@
 const _ = require('underscore');
-const isModel = require('../libs/helpers').isModel;
-const isTensor = require('../libs/helpers').isTensor;
-const extractValue = require('../libs/helpers').extractValue;
+const Helpers = require('../libs/helpers');
+const { isModel, isTensor } = Helpers;
+const extractValue = Helpers.extractValue;
 
 module.exports = function(RED) {
   function RedTensorTrain(config) {
@@ -13,7 +13,7 @@ module.exports = function(RED) {
     node.batchSize = !isNaN(parseInt(config.batchSize, 10)) ? parseInt(config.batchSize, 10) : null;
     node.validationSplit = !isNaN(parseFloat(config.validationSplit)) ? parseFloat(config.validationSplit) : null;
 
-    node.status({ fill: 'red', shape: 'ring', text: 'Missing Model, Tensor X, Tensor Y' });
+    node.status({ fill: 'red', shape: 'ring', text: 'Missing Model, Train Features, Train Target' });
 
     this.on('close', function() {
       console.log('closing train node');
@@ -21,24 +21,22 @@ module.exports = function(RED) {
     });
 
     this.on('input', function(msg) {
-
-
-      let model, tensorX, tensorY;
+      let model, trainFeatures, trainTarget;
 
       model = extractValue('model', 'model', msg, node, { store: true });
-      tensorX = extractValue('tensor', 'tensorX', msg, node, { usePayload: false, store: true });
-      tensorY = extractValue('tensor', 'tensorY', msg, node, { usePayload: false, store: true });
+      trainFeatures = extractValue('tensor', 'trainFeatures', msg, node, { usePayload: false, store: true });
+      trainTarget = extractValue('tensor', 'trainTarget', msg, node, { usePayload: false, store: true });
 
       // check what's missing
       let missingElements = [];
       if (!isModel(model)) {
         missingElements.push('Model');
       }
-      if (!isTensor(tensorX)) {
-        missingElements.push('Tensor X');
+      if (!isTensor(trainFeatures)) {
+        missingElements.push('Train features');
       }
-      if (!isTensor(tensorY)) {
-        missingElements.push('Tensor Y');
+      if (!isTensor(trainTarget)) {
+        missingElements.push('Train Target');
       }
 
       if (_.isEmpty(missingElements)) {
@@ -47,11 +45,7 @@ module.exports = function(RED) {
 
         const params = {
           epochs: node.epochs,
-          //epochs: 200,
-          //batchSize: 40,
-          //validationSplit: 0.2,
           verbose: _.isNumber(node.verbose) ? node.verbose : undefined,
-          //verbose: 2,
           batchSize: _.isNumber(node.batchSize) ? node.batchSize : undefined,
           validationSplit: _.isNumber(node.validationSplit) ? node.validationSplit : undefined,
         };
@@ -67,7 +61,7 @@ module.exports = function(RED) {
           }
         };
         model
-          .fit(tensorX, tensorY, params)
+          .fit(trainFeatures, trainTarget, params)
           .then(() => {
             // debug
             //if (node.debug && model != null) {
@@ -78,8 +72,8 @@ module.exports = function(RED) {
             // prepare payload
             const context = node.context();
             context.set('model', null);
-            context.set('tensorX', null);
-            context.set('tensorY', null);
+            context.set('trainFeatures', null);
+            context.set('trainTarget', null);
             msg.payload = model;
             node.send([msg, null]);
           });

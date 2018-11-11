@@ -40,10 +40,14 @@
     icon: 'icon-tensor-flow.png',
     label: function() {
       var name = this.name || 'Tensor';
-      if (this.tensorInput === 'x') {
-        name += ' (X)';
-      } else if (this.tensorInput === 'y') {
-        name += ' (Y)';
+      if (this.tensorInput === 'trainFeatures') {
+        name += ' (Train Features)';
+      } else if (this.tensorInput === 'trainTarget') {
+        name += ' (Train Target)';
+      } else if (this.tensorInput === 'testFeatures') {
+        name += ' (Test Features)';
+      } else if (this.tensorInput === 'testTarget') {
+        name += ' (Test Target)';
       }
       return name;
     },
@@ -65,43 +69,6 @@
           }
         }*/
       }
-    },
-    oneditsave: function() {
-      /*var toDim = null;
-      var shape = null;
-      switch(this.tensorType) {
-        case 'tensor':
-        case 'tensor6d':
-          toDim = 6;
-          break;
-        case 'tensor5d':
-          toDim = 5;
-          break;
-        case 'tensor4d':
-          toDim = 4;
-          break;
-        case 'tensor3d':
-          toDim = 3;
-          break;
-        case 'tensor2d':
-          toDim = 2;
-          break;
-        case 'tensor1d':
-          toDim = null;
-      }
-      if (toDim != null) {
-        shape = [];
-        for(var i = 1; i <= toDim; i++) {
-          shape.push(parseInt($('#node-input-dim' + i).val(), 10));
-        }
-        var invalid = false;
-        for(var i = 1; i <= toDim; i++) {
-          if (isNaN(shape[i]))
-        }
-      }
-      console.log('shape', shape);
-      this.shape = shape;
-      */
     }
   });
 </script>
@@ -112,11 +79,13 @@
   <input type="text" id="node-input-name" placeholder="Name">
 </div>
 <div class="form-row">
-  <label for="node-input-tensorInput">X/Y</label>
+  <label for="node-input-tensorInput">Tensor</label>
   <select id="node-input-tensorInput">
     <option value="">Not specified</option>
-    <option value="x">Tensor X (input)</option>
-    <option value="y">Tensor Y (output)</option>
+    <option value="trainFeatures">Train Features</option>
+    <option value="trainTarget">Train Target</option>
+    <option value="testFeatures">Test Features</option>
+    <option value="testTarget">Test Target</option>
   </select>
 </div>
 <div class="form-row">

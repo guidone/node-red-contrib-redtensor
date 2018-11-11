@@ -1,5 +1,6 @@
 const _ = require('underscore');
-const isTensor = require('../libs/helpers').isTensor;
+const Helpers = require('../libs/helpers');
+const { isTensor, decodeTarget } = Helpers;
 const tf = require('@tensorflow/tfjs');
 require('@tensorflow/tfjs-node');
 
@@ -21,7 +22,7 @@ function shuffle(data, target) {
     target[counter] = target[index];
     target[index] = temp;
   }
-};
+}
 
 function determineMeanAndStddev(data) {
   const dataMean = data.mean(0);
@@ -48,12 +49,20 @@ module.exports = function(RED) {
 
       let target, transformed;
       let storeIn = node.target;
+      const disabledTarget = ['shuffle'];
+
       if (node.target === 'payload' && isTensor(msg.payload)) {
         target = msg.payload;
-      } else if (node.target === 'tensorX' && isTensor(msg.tensorX)) {
-        target = msg.tensorX;
-      } else if (node.target === 'tensorY' && isTensor(msg.tensorY)) {
-        target = msg.tensorY;
+      } else if (node.target != null && isTensor(msg[node.target])) {
+        target = msg[node.target];
+      }
+
+      // if a tranformation is selected and it's not one of those that disable the target menu, then check
+      // for a valid tensor in "target"
+      if (node.transformation != null && disabledTarget.indexOf(node.transformation) === -1) {
+        if (!isTensor(target)) {
+          node.error(`${decodeTarget(node.target)} tensor is missing or invalid.`);
+        }
       }
 
       console.log('TRANSFORM NODE');
@@ -69,30 +78,36 @@ module.exports = function(RED) {
         case 'identity':
           // do nothing
           break;
-        case 'shuffle2':
+        case 'shuffle':
           storeIn = null; // do not store
-          const trainTensor = msg.tensorX;
-          const targetTensor = msg.tensorY;
+          const trainTensor = msg.trainFeatures;
+          const targetTensor = msg.trainTarget;
+
+          if (!isTensor(trainTensor)) {
+            node.error('Train features tensor is missing or invalid.');
+            return;
+          }
+          if (!isTensor(targetTensor)) {
+            node.error('Train target tensor is missing or invalid.');
+            return;
+          }
 
           const trainSize = trainTensor.shape[0];
           const newOrder = [];
-          for(var idx = 0; idx < trainSize; idx++) {
+          for(let idx = 0; idx < trainSize; idx++) {
             newOrder.push(idx);
           }
           const tensorOrder = tf.tensor1d(_.shuffle(newOrder), 'int32');
 
-          //console.log('shuffleeeeee');
-          //console.log('newOrder', newOrder);
-          //tensorOrder.print();
 
-          msg.tensorX = trainTensor.gather(tensorOrder);
-          msg.tensorY = targetTensor.gather(tensorOrder);
+          msg.trainFeatures = trainTensor.gather(tensorOrder);
+          msg.trainTarget = targetTensor.gather(tensorOrder);
 
           console.log('media dopo');
           break;
 
         // similar but doesn't really change
-        case 'shuffle':
+        case 'shuffle2':
 
           const trainData = cloneArray(msg.trainData);
           const targetData = cloneArray(msg.targetData);
@@ -115,21 +130,13 @@ module.exports = function(RED) {
 
 
 
-          //console.log('riordinato-----');
-          //msg.tensorX.print();
-
-
           break;
       }
 
-      if (storeIn === 'payload' && isTensor(msg.payload)) {
+      if (storeIn === 'payload') {
         msg.payload = transformed;
-      } else if (storeIn === 'tensorX' && isTensor(msg.tensorX)) {
-         msg.tensorX = transformed;
-      } else if (storeIn === 'tensorY' && isTensor(msg.tensorY)) {
-        msg.tensorY = transformed;
-      } else {
-        console.log('not stored');
+      } else if (storeIn != null) {
+         msg[storeIn] = transformed;
       }
 
       node.send(msg);

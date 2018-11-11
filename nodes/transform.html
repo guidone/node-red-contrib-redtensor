@@ -7,10 +7,12 @@
         value: ''
       },
       transformation: {
-        value: ''
+        value: '',
+        required: true
       },
       target: {
-        value: 'payload'
+        value: 'payload',
+        required: true
       }
     },
     inputs: 1,
@@ -19,14 +21,28 @@
     icon: 'icon-tensor-flow.png',
     label: function() {
       var name = this.name || 'Transform';
-      if (this.target === 'tensorX') {
-        name += ' (X)';
-      } else if (this.target === 'tensorY') {
-        name += ' (Y)';
+      if (this.tensorInput === 'trainFeatures') {
+        name += ' (Train Features)';
+      } else if (this.tensorInput === 'trainTarget') {
+        name += ' (Train Target)';
+      } else if (this.tensorInput === 'testFeatures') {
+        name += ' (Test Features)';
+      } else if (this.tensorInput === 'testTarget') {
+        name += ' (Test Target)';
       }
       return name;
     },
-
+    oneditprepare: function() {
+      $('#node-input-transformation')
+        .change(function() {
+          var type = $(this).val();
+          if (['shuffle'].indexOf(type) !== -1) {
+            $('#node-input-target').attr('disabled', true);
+          } else {
+            $('#node-input-target').attr('disabled', false);
+          }
+        });
+    }
   });
 </script>
 
@@ -47,8 +63,10 @@
   <label for="node-input-target">Target</label>
   <select id="node-input-target">
     <option value="payload">Payload</option>
-    <option value="tensorX">Tensor X</option>
-    <option value="tensorY">Tensor Y</option>
+    <option value="trainFeatures">Train Features</option>
+    <option value="trainTarget">Train Target</option>
+    <option value="testFeatures">Test Features</option>
+    <option value="testTarget">Test Target</option>
   </select>
 </div>
 

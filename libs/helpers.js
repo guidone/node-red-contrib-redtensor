@@ -27,6 +27,23 @@ const helper = {
     return (_.isString(loss) && losses.indexOf(loss) !== -1);
   },
 
+  decodeTarget: target => {
+    switch(target) {
+      case 'trainFeatures':
+        return 'Train Features';
+      case 'trainTarget':
+        return 'Train Target';
+      case 'testFeatures':
+        return 'Test Features';
+      case 'testTarget':
+        return 'Test Target';
+      case 'payload':
+        return 'Payload';
+      default:
+        return target;
+    }
+  },
+
   /**
    * @method cloneArray
    * Clone array from payload, othwerwise array coming from payload will not work with tensor, don't know why.

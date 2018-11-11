@@ -1,8 +1,9 @@
 const _ = require('underscore');
 const tf = require('@tensorflow/tfjs');
+const Helpers = require('../libs/helpers');
 require('@tensorflow/tfjs-node');
 
-const cloneArray = require('../libs/helpers').cloneArray;
+const { cloneArray } = Helpers;
 
 module.exports = function(RED) {
   function RedTensorTensor(config) {
@@ -91,12 +92,8 @@ module.exports = function(RED) {
         tensor.print();
       }
       // assign to input or output
-      if (node.tensorInput === 'x') {
-        msg.tensorX = tensor;
-      } else if (node.tensorInput === 'y') {
-        msg.tensorY = tensor;
-      } else {
-        msg.payload = tensor;
+      if (node.tensorInput != null) {
+        msg[node.tensorInput] = tensor;
       }
 
       node.send(msg);

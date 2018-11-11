@@ -1,10 +1,6 @@
 const _ = require('underscore');
-
-const isModel = require('../libs/helpers').isModel;
-const isOptimizer = require('../libs/helpers').isOptimizer;
-const isLoss = require('../libs/helpers').isLoss;
-const extractValue = require('../libs/helpers').extractValue;
-const tf = require('@tensorflow/tfjs');
+const Helpers = require('../libs/helpers');
+const { isModel, isOptimizer, isLoss, extractValue } = Helpers;
 
 module.exports = function(RED) {
   function RedTensorCompile(config) {
