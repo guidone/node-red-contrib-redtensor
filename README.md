@@ -2,7 +2,7 @@
   <img src="./images/red_tensor_logo.png">
   <br/>
   <br/>
-  **REDTensor** is a wrapper of [TensorFlow.js](https://js.tensorflow.org) for [Node-RED](https://nodered.org). ~~Almost~~ no coding skills required.
+  <b>REDTensor</b> is a wrapper of <a href="https://js.tensorflow.org" target="_blank">TensorFlow.js</a> for <a href="https://nodered.org" target="_blank">Node-RED</a>). <br/>~~Almost~~ no coding skills required.
 </p>
 
 <p align="center">
