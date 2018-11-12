@@ -1,7 +1,7 @@
 {
   "name": "node-red-contrib-redtensor",
   "version": "0.0.1",
-  "description": "RED Tensor",
+  "description": "A TensorFlow wrapper for Node-RED",
   "scripts": {
     "start": "node-red",
     "test": "jest",

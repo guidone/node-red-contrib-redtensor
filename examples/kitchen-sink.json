@@ -1,0 +1,952 @@
+[
+  {
+    "id": "6c06ce7f.85198",
+    "type": "tab",
+    "label": "Tutorial 1",
+    "disabled": false,
+    "info": ""
+  },
+  {
+    "id": "1b0db65c.6ecb4a",
+    "type": "tab",
+    "label": "Boston housing",
+    "disabled": false,
+    "info": ""
+  },
+  {
+    "id": "a053ed2.559581",
+    "type": "ui_base",
+    "theme": {
+      "name": "theme-light",
+      "lightTheme": {
+        "default": "#0094CE",
+        "baseColor": "#ff9300",
+        "baseFont": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif",
+        "edited": true,
+        "reset": false
+      },
+      "darkTheme": {
+        "default": "#097479",
+        "baseColor": "#097479",
+        "baseFont": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif",
+        "edited": false
+      },
+      "customTheme": {
+        "name": "Untitled Theme 1",
+        "default": "#4B7930",
+        "baseColor": "#4B7930",
+        "baseFont": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif",
+        "reset": false
+      },
+      "themeState": {
+        "base-color": {
+          "default": "#0094CE",
+          "value": "#ff9300",
+          "edited": true
+        },
+        "page-titlebar-backgroundColor": {
+          "value": "#ff9300",
+          "edited": false
+        },
+        "page-backgroundColor": {
+          "value": "#fafafa",
+          "edited": false
+        },
+        "page-sidebar-backgroundColor": {
+          "value": "#ffffff",
+          "edited": false
+        },
+        "group-textColor": {
+          "value": "#ffb34d",
+          "edited": false
+        },
+        "group-borderColor": {
+          "value": "#ffffff",
+          "edited": false
+        },
+        "group-backgroundColor": {
+          "value": "#ffffff",
+          "edited": false
+        },
+        "widget-textColor": {
+          "value": "#111111",
+          "edited": false
+        },
+        "widget-backgroundColor": {
+          "value": "#ff9300",
+          "edited": false
+        },
+        "widget-borderColor": {
+          "value": "#ffffff",
+          "edited": false
+        },
+        "base-font": {
+          "value": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif"
+        }
+      },
+      "angularTheme": {
+        "primary": "indigo",
+        "accents": "blue",
+        "warn": "red",
+        "background": "grey"
+      }
+    },
+    "site": {
+      "name": "Node-RED Dashboard",
+      "hideToolbar": "false",
+      "allowSwipe": "false",
+      "allowTempTheme": "true",
+      "dateFormat": "DD/MM/YYYY",
+      "sizes": {
+        "sx": 48,
+        "sy": 48,
+        "gx": 6,
+        "gy": 6,
+        "cx": 6,
+        "cy": 6,
+        "px": 0,
+        "py": 0
+      }
+    }
+  },
+  {
+    "id": "996fd970.ebd958",
+    "type": "ui_tab",
+    "z": "",
+    "name": "Basic Example",
+    "icon": "dashboard",
+    "order": 2
+  },
+  {
+    "id": "3c8300aa.2a574",
+    "type": "ui_group",
+    "z": "",
+    "name": "Charts",
+    "tab": "996fd970.ebd958",
+    "disp": false,
+    "width": "10",
+    "collapse": false
+  },
+  {
+    "id": "3b30c7c.9a9e738",
+    "type": "ui_group",
+    "z": "",
+    "name": "Buttons",
+    "tab": "996fd970.ebd958",
+    "disp": false,
+    "width": "3",
+    "collapse": false
+  },
+  {
+    "id": "ae44969d.3a3058",
+    "type": "ui_tab",
+    "z": "",
+    "name": "Boston Housing",
+    "icon": "dashboard",
+    "order": 1
+  },
+  {
+    "id": "cc31a958.e6a978",
+    "type": "ui_group",
+    "z": "",
+    "name": "Charts Boston Housing",
+    "tab": "ae44969d.3a3058",
+    "disp": true,
+    "width": "16",
+    "collapse": false
+  },
+  {
+    "id": "a8a85d69.2427c",
+    "type": "redtensor-model",
+    "z": "6c06ce7f.85198",
+    "name": "Sequential model",
+    "modelType": "sequential",
+    "x": 230,
+    "y": 180,
+    "wires": [
+      [
+        "a9a4dd32.b7c11"
+      ]
+    ]
+  },
+  {
+    "id": "a9a4dd32.b7c11",
+    "type": "redtensor-layer-dense",
+    "z": "6c06ce7f.85198",
+    "name": "",
+    "inputDim": "1",
+    "units": "1",
+    "x": 430,
+    "y": 180,
+    "wires": [
+      [
+        "65b828d0.835db8"
+      ]
+    ]
+  },
+  {
+    "id": "65b828d0.835db8",
+    "type": "redtensor-compile",
+    "z": "6c06ce7f.85198",
+    "name": "",
+    "debug": false,
+    "optimizer": "sgd",
+    "loss": "meanSquaredError",
+    "x": 600,
+    "y": 180,
+    "wires": [
+      [
+        "f52b9ff2.57014"
+      ]
+    ]
+  },
+  {
+    "id": "f52b9ff2.57014",
+    "type": "redtensor-train",
+    "z": "6c06ce7f.85198",
+    "name": "",
+    "debug": true,
+    "epochs": "10",
+    "batchSize": "",
+    "verbose": "1",
+    "validationSplit": "",
+    "x": 670,
+    "y": 260,
+    "wires": [
+      [],
+      [],
+      [
+        "ec960e5b.64a82"
+      ]
+    ]
+  },
+  {
+    "id": "b4eae6d.3bc2d18",
+    "type": "redtensor-tensor",
+    "z": "6c06ce7f.85198",
+    "name": "[1, 2, 3, 4]",
+    "tensorInput": "trainFeatures",
+    "tensorType": "tensor2d",
+    "dim1": "",
+    "dim2": "",
+    "dim3": "",
+    "dim4": "",
+    "dim5": "",
+    "dim6": "",
+    "debug": true,
+    "x": 410,
+    "y": 240,
+    "wires": [
+      [
+        "f52b9ff2.57014"
+      ]
+    ]
+  },
+  {
+    "id": "59067616.262038",
+    "type": "function",
+    "z": "6c06ce7f.85198",
+    "name": "[1, 2, 3, 4]",
+    "func": "msg.payload = [[1], [2], [3], [4]];\n\nreturn msg;",
+    "outputs": 1,
+    "noerr": 0,
+    "x": 200,
+    "y": 240,
+    "wires": [
+      [
+        "b4eae6d.3bc2d18"
+      ]
+    ]
+  },
+  {
+    "id": "89dc85f7.af5468",
+    "type": "function",
+    "z": "6c06ce7f.85198",
+    "name": "[1, 3, 5, 7]",
+    "func": "msg.payload = [1, 3, 5, 7];\n\nreturn msg;",
+    "outputs": 1,
+    "noerr": 0,
+    "x": 200,
+    "y": 300,
+    "wires": [
+      [
+        "b3d729e4.8d1678"
+      ]
+    ]
+  },
+  {
+    "id": "b3d729e4.8d1678",
+    "type": "redtensor-tensor",
+    "z": "6c06ce7f.85198",
+    "name": "[1, 3, 5, 7]",
+    "tensorInput": "trainTarget",
+    "tensorType": "tensor2d",
+    "dim1": "4",
+    "dim2": "1",
+    "dim3": "",
+    "dim4": "",
+    "dim5": "",
+    "dim6": "",
+    "debug": true,
+    "x": 410,
+    "y": 300,
+    "wires": [
+      [
+        "f52b9ff2.57014"
+      ]
+    ]
+  },
+  {
+    "id": "3000a547.f0e7ba",
+    "type": "redtensor-predict",
+    "z": "6c06ce7f.85198",
+    "name": "",
+    "buttons": [],
+    "message": "",
+    "x": 780,
+    "y": 640,
+    "wires": [
+      [
+        "6fb7212.dbb8ee"
+      ]
+    ]
+  },
+  {
+    "id": "5180744b.a837cc",
+    "type": "inject",
+    "z": "6c06ce7f.85198",
+    "name": "",
+    "topic": "",
+    "payload": "",
+    "payloadType": "date",
+    "repeat": "",
+    "crontab": "",
+    "once": false,
+    "onceDelay": 0.1,
+    "x": 100,
+    "y": 580,
+    "wires": [
+      [
+        "e0e91c75.dafa7"
+      ]
+    ]
+  },
+  {
+    "id": "e0e91c75.dafa7",
+    "type": "function",
+    "z": "6c06ce7f.85198",
+    "name": "Predictor this",
+    "func": "msg.payload = [5];\n\nreturn msg;",
+    "outputs": 1,
+    "noerr": 0,
+    "x": 320,
+    "y": 580,
+    "wires": [
+      [
+        "249bb6fb.1b701a"
+      ]
+    ]
+  },
+  {
+    "id": "249bb6fb.1b701a",
+    "type": "redtensor-tensor",
+    "z": "6c06ce7f.85198",
+    "name": "Tensor 4x1",
+    "tensorInput": "",
+    "tensorType": "tensor2d",
+    "dim1": "1",
+    "dim2": "1",
+    "dim3": "",
+    "dim4": "",
+    "dim5": "",
+    "dim6": "",
+    "debug": false,
+    "x": 530,
+    "y": 580,
+    "wires": [
+      [
+        "3000a547.f0e7ba"
+      ]
+    ]
+  },
+  {
+    "id": "6fb7212.dbb8ee",
+    "type": "redtensor-dump",
+    "z": "6c06ce7f.85198",
+    "name": "",
+    "buttons": [],
+    "message": "",
+    "x": 890,
+    "y": 700,
+    "wires": []
+  },
+  {
+    "id": "e1bef33d.56213",
+    "type": "csv",
+    "z": "1b0db65c.6ecb4a",
+    "name": "",
+    "sep": ",",
+    "hdrin": true,
+    "hdrout": "",
+    "multi": "mult",
+    "ret": "\\n",
+    "temp": "",
+    "skip": "0",
+    "x": 1310,
+    "y": 120,
+    "wires": [
+      [
+        "1c07c040.a6259"
+      ]
+    ]
+  },
+  {
+    "id": "ba2635c2.6d3b88",
+    "type": "file in",
+    "z": "1b0db65c.6ecb4a",
+    "name": "Load train data",
+    "filename": "/web/train-data.csv",
+    "format": "utf8",
+    "chunk": false,
+    "sendError": false,
+    "x": 1140,
+    "y": 120,
+    "wires": [
+      [
+        "e1bef33d.56213"
+      ]
+    ]
+  },
+  {
+    "id": "e680cbc7.3ce0e8",
+    "type": "inject",
+    "z": "1b0db65c.6ecb4a",
+    "name": "",
+    "topic": "",
+    "payload": "",
+    "payloadType": "date",
+    "repeat": "",
+    "crontab": "",
+    "once": false,
+    "onceDelay": 0.1,
+    "x": 940,
+    "y": 120,
+    "wires": [
+      [
+        "ba2635c2.6d3b88"
+      ]
+    ]
+  },
+  {
+    "id": "d4bc11ad.feeb7",
+    "type": "debug",
+    "z": "1b0db65c.6ecb4a",
+    "name": "",
+    "active": true,
+    "tosidebar": true,
+    "console": false,
+    "tostatus": false,
+    "complete": "payload",
+    "x": 2230,
+    "y": 340,
+    "wires": []
+  },
+  {
+    "id": "f78bb527.5bf328",
+    "type": "redtensor-tensor",
+    "z": "1b0db65c.6ecb4a",
+    "name": "Train data",
+    "tensorInput": "trainFeatures",
+    "tensorType": "tensor2d",
+    "dim1": "",
+    "dim2": "",
+    "dim3": "",
+    "dim4": "",
+    "dim5": "",
+    "dim6": "",
+    "debug": true,
+    "x": 1760,
+    "y": 120,
+    "wires": [
+      [
+        "e365a46c.c9c418"
+      ]
+    ]
+  },
+  {
+    "id": "1c07c040.a6259",
+    "type": "function",
+    "z": "1b0db65c.6ecb4a",
+    "name": "Remove keys",
+    "func": "msg.payload = msg.payload.map(item => {\n return [\n   item.crim,\n   item.zn,\n   item.indus,\n   item.chas,\n   item.nox,\n   item.rm,\n   item.age,\n   item.dis,\n   item.rad,\n   item.tax,\n   item.ptratio,\n   item.lstat     \n ]; \n});\nmsg.trainData = msg.payload;\n\nreturn msg;",
+    "outputs": 1,
+    "noerr": 0,
+    "x": 1480,
+    "y": 120,
+    "wires": [
+      [
+        "f78bb527.5bf328"
+      ]
+    ]
+  },
+  {
+    "id": "e365a46c.c9c418",
+    "type": "file in",
+    "z": "1b0db65c.6ecb4a",
+    "name": "Load target data",
+    "filename": "/web/train-target.csv",
+    "format": "utf8",
+    "chunk": false,
+    "sendError": false,
+    "x": 970,
+    "y": 220,
+    "wires": [
+      [
+        "98243bfc.bdc328"
+      ]
+    ]
+  },
+  {
+    "id": "98243bfc.bdc328",
+    "type": "csv",
+    "z": "1b0db65c.6ecb4a",
+    "name": "",
+    "sep": ",",
+    "hdrin": true,
+    "hdrout": "",
+    "multi": "mult",
+    "ret": "\\n",
+    "temp": "",
+    "skip": "0",
+    "x": 1170,
+    "y": 220,
+    "wires": [
+      [
+        "afe5bcd4.4d13c"
+      ]
+    ]
+  },
+  {
+    "id": "afe5bcd4.4d13c",
+    "type": "function",
+    "z": "1b0db65c.6ecb4a",
+    "name": "Remove keys",
+    "func": "msg.payload = msg.payload.map(item => {\n return [\n   item.medv     \n ]; \n});\nmsg.targetData = msg.payload;\n\nreturn msg;",
+    "outputs": 1,
+    "noerr": 0,
+    "x": 1360,
+    "y": 220,
+    "wires": [
+      [
+        "94f95711.d566d8"
+      ]
+    ]
+  },
+  {
+    "id": "94f95711.d566d8",
+    "type": "redtensor-tensor",
+    "z": "1b0db65c.6ecb4a",
+    "name": "Target data",
+    "tensorInput": "trainTarget",
+    "tensorType": "tensor2d",
+    "dim1": "",
+    "dim2": "",
+    "dim3": "",
+    "dim4": "",
+    "dim5": "",
+    "dim6": "",
+    "debug": true,
+    "x": 1620,
+    "y": 220,
+    "wires": [
+      [
+        "acc395ea.e3be58"
+      ]
+    ]
+  },
+  {
+    "id": "17177425.b3c69c",
+    "type": "redtensor-model",
+    "z": "1b0db65c.6ecb4a",
+    "name": "Boston Housing Model",
+    "modelType": "sequential",
+    "x": 890,
+    "y": 540,
+    "wires": [
+      [
+        "54628d99.c07614"
+      ]
+    ]
+  },
+  {
+    "id": "54628d99.c07614",
+    "type": "redtensor-layer-dense",
+    "z": "1b0db65c.6ecb4a",
+    "name": "Dense 1",
+    "inputDim": "12",
+    "units": "50",
+    "activation": "sigmoid",
+    "kernelInitializer": "leCunNormal",
+    "x": 1120,
+    "y": 540,
+    "wires": [
+      [
+        "9da0375.b937cc8"
+      ]
+    ]
+  },
+  {
+    "id": "3222a8d.be75e58",
+    "type": "redtensor-compile",
+    "z": "1b0db65c.6ecb4a",
+    "name": "Multi Layer Perceptron Regression Model",
+    "debug": true,
+    "optimizer": "",
+    "loss": "meanSquaredError",
+    "x": 1580,
+    "y": 540,
+    "wires": [
+      [
+        "cf8d85d4.499e58"
+      ]
+    ]
+  },
+  {
+    "id": "11d1a119.b2c97f",
+    "type": "inject",
+    "z": "1b0db65c.6ecb4a",
+    "name": "",
+    "topic": "",
+    "payload": "",
+    "payloadType": "date",
+    "repeat": "",
+    "crontab": "",
+    "once": false,
+    "onceDelay": 0.1,
+    "x": 860,
+    "y": 420,
+    "wires": [
+      [
+        "17177425.b3c69c",
+        "7c4da773.c3d4d8"
+      ]
+    ]
+  },
+  {
+    "id": "9da0375.b937cc8",
+    "type": "redtensor-layer-dense",
+    "z": "1b0db65c.6ecb4a",
+    "name": "Dense 2",
+    "inputDim": "",
+    "units": "1",
+    "activation": "",
+    "kernelInitializer": "",
+    "x": 1300,
+    "y": 540,
+    "wires": [
+      [
+        "3222a8d.be75e58"
+      ]
+    ]
+  },
+  {
+    "id": "7c4da773.c3d4d8",
+    "type": "redtensor-optimizer",
+    "z": "1b0db65c.6ecb4a",
+    "name": "SGD 0.01",
+    "optimizerType": "sgd",
+    "learningRate": "0.01",
+    "x": 1300,
+    "y": 460,
+    "wires": [
+      [
+        "3222a8d.be75e58"
+      ]
+    ]
+  },
+  {
+    "id": "cf8d85d4.499e58",
+    "type": "redtensor-train",
+    "z": "1b0db65c.6ecb4a",
+    "name": "",
+    "debug": true,
+    "epochs": "200",
+    "batchSize": "40",
+    "verbose": "2",
+    "validationSplit": "0.2",
+    "x": 1970,
+    "y": 540,
+    "wires": [
+      [],
+      [],
+      [
+        "b7f6984f.7fdc18"
+      ]
+    ]
+  },
+  {
+    "id": "9d98d58d.dec7f8",
+    "type": "ui_button",
+    "z": "6c06ce7f.85198",
+    "name": "",
+    "group": "3b30c7c.9a9e738",
+    "order": 0,
+    "width": "0",
+    "height": "0",
+    "passthru": false,
+    "label": "Compile & Train",
+    "color": "",
+    "bgcolor": "",
+    "icon": "",
+    "payload": "",
+    "payloadType": "str",
+    "topic": "",
+    "x": 220,
+    "y": 100,
+    "wires": [
+      [
+        "a8a85d69.2427c",
+        "59067616.262038",
+        "89dc85f7.af5468"
+      ]
+    ]
+  },
+  {
+    "id": "ec960e5b.64a82",
+    "type": "ui_chart",
+    "z": "6c06ce7f.85198",
+    "name": "",
+    "group": "3c8300aa.2a574",
+    "order": 0,
+    "width": "0",
+    "height": "0",
+    "label": "chart",
+    "chartType": "line",
+    "legend": "true",
+    "xformat": "auto",
+    "interpolate": "linear",
+    "nodata": "Not trained yet",
+    "dot": true,
+    "ymin": "",
+    "ymax": "",
+    "removeOlder": 1,
+    "removeOlderPoints": "20",
+    "removeOlderUnit": "3600",
+    "cutout": 0,
+    "useOneColor": false,
+    "colors": [
+      "#1f77b4",
+      "#aec7e8",
+      "#ff7f0e",
+      "#2ca02c",
+      "#98df8a",
+      "#d62728",
+      "#ff9896",
+      "#9467bd",
+      "#c5b0d5"
+    ],
+    "useOldStyle": false,
+    "x": 850,
+    "y": 260,
+    "wires": [
+      [],
+      []
+    ]
+  },
+  {
+    "id": "c97e578d.37edd8",
+    "type": "function",
+    "z": "1b0db65c.6ecb4a",
+    "name": "Prepare data for chart",
+    "func": "let epoch = 10;\nlet loss = flow.get('loss');\nlet val_loss = flow.get('val_loss');\n\n\nif (loss == null) {\n  loss = [];\n}\nif (val_loss == null) {\n  val_loss = [];\n}\nconst labels = [];\n\nloss.push(msg.payload.logs.loss);\nflow.set('loss', loss);\nval_loss.push(msg.payload.logs.val_loss);\nflow.set('val_loss', val_loss);\n\n\nfor(var i = 1; i <= loss.length; i++) {\n  labels.push(`Epoch ${i}`);    \n}\n\nmsg.payload = [{\n  series: ['Train data loss', 'Validation data loss' ],\n  data: [ loss, val_loss ],\n  labels: labels\n}];\n\nreturn msg;",
+    "outputs": 1,
+    "noerr": 0,
+    "x": 2280,
+    "y": 460,
+    "wires": [
+      []
+    ]
+  },
+  {
+    "id": "b7f6984f.7fdc18",
+    "type": "ui_chart",
+    "z": "1b0db65c.6ecb4a",
+    "name": "",
+    "group": "cc31a958.e6a978",
+    "order": 0,
+    "width": "0",
+    "height": "0",
+    "label": "chart",
+    "chartType": "line",
+    "legend": "true",
+    "xformat": "auto",
+    "interpolate": "linear",
+    "nodata": "Not trained yet",
+    "dot": true,
+    "ymin": "0",
+    "ymax": "100",
+    "removeOlder": 1,
+    "removeOlderPoints": "20",
+    "removeOlderUnit": "3600",
+    "cutout": 0,
+    "useOneColor": false,
+    "colors": [
+      "#1f77b4",
+      "#aec7e8",
+      "#ff7f0e",
+      "#2ca02c",
+      "#98df8a",
+      "#d62728",
+      "#ff9896",
+      "#9467bd",
+      "#c5b0d5"
+    ],
+    "useOldStyle": false,
+    "x": 2210,
+    "y": 540,
+    "wires": [
+      [],
+      []
+    ]
+  },
+  {
+    "id": "5e5992ed.70682c",
+    "type": "ui_button",
+    "z": "1b0db65c.6ecb4a",
+    "name": "",
+    "group": "cc31a958.e6a978",
+    "order": 0,
+    "width": "0",
+    "height": "0",
+    "passthru": false,
+    "label": "Reset",
+    "color": "",
+    "bgcolor": "",
+    "icon": "",
+    "payload": "",
+    "payloadType": "str",
+    "topic": "",
+    "x": 2130,
+    "y": 660,
+    "wires": [
+      [
+        "c144f7cc.3150a8"
+      ]
+    ]
+  },
+  {
+    "id": "c144f7cc.3150a8",
+    "type": "function",
+    "z": "1b0db65c.6ecb4a",
+    "name": "Clear chart",
+    "func": "msg.payload = [];\nflow.set('loss', null);\nflow.set('val_loss', null);\nreturn msg;",
+    "outputs": 1,
+    "noerr": 0,
+    "x": 2290,
+    "y": 660,
+    "wires": [
+      []
+    ]
+  },
+  {
+    "id": "f144ac8a.25675",
+    "type": "debug",
+    "z": "1b0db65c.6ecb4a",
+    "name": "",
+    "active": true,
+    "tosidebar": true,
+    "console": false,
+    "tostatus": false,
+    "complete": "false",
+    "x": 2270,
+    "y": 420,
+    "wires": []
+  },
+  {
+    "id": "6aafbec8.acc7c",
+    "type": "redtensor-transform",
+    "z": "1b0db65c.6ecb4a",
+    "name": "Normalize train data",
+    "transformation": "normalize",
+    "target": "trainFeatures",
+    "x": 2220,
+    "y": 220,
+    "wires": [
+      [
+        "cf8d85d4.499e58"
+      ]
+    ]
+  },
+  {
+    "id": "59aebb70.79f994",
+    "type": "function",
+    "z": "1b0db65c.6ecb4a",
+    "name": "Shuffle",
+    "func": "function shuffle(data, target) {\n  let counter = data.length;\n  let temp = 0;\n  let index = 0;\n  while (counter > 0) {\n    index = (Math.random() * counter) | 0;\n    counter--;\n    // data:\n    temp = data[counter];\n    data[counter] = data[index];\n    data[index] = temp;\n    // target:\n    temp = target[counter];\n    target[counter] = target[index];\n    target[index] = temp;\n  }\n};\n\nshuffle(msg.trainData, msg.targetData);\n\n\n\nreturn [{ payload: msg.trainData}, { payload: msg.targetData}];",
+    "outputs": 2,
+    "noerr": 0,
+    "x": 1360,
+    "y": 340,
+    "wires": [
+      [],
+      []
+    ]
+  },
+  {
+    "id": "acc395ea.e3be58",
+    "type": "redtensor-transform",
+    "z": "1b0db65c.6ecb4a",
+    "name": "Shuffle",
+    "transformation": "shuffle",
+    "target": "payload",
+    "x": 1840,
+    "y": 220,
+    "wires": [
+      [
+        "6ed23060.c7e7e"
+      ]
+    ]
+  },
+  {
+    "id": "5aca0971.4c0de8",
+    "type": "ui_button",
+    "z": "1b0db65c.6ecb4a",
+    "name": "",
+    "group": "cc31a958.e6a978",
+    "order": 0,
+    "width": "0",
+    "height": "0",
+    "passthru": false,
+    "label": "Compile & Train",
+    "color": "",
+    "bgcolor": "",
+    "icon": "",
+    "payload": "",
+    "payloadType": "str",
+    "topic": "",
+    "x": 620,
+    "y": 260,
+    "wires": [
+      [
+        "ba2635c2.6d3b88",
+        "7c4da773.c3d4d8",
+        "17177425.b3c69c"
+      ]
+    ]
+  },
+  {
+    "id": "6ed23060.c7e7e",
+    "type": "redtensor-transform",
+    "z": "1b0db65c.6ecb4a",
+    "name": "Shuffle",
+    "transformation": "shuffle",
+    "target": "payload",
+    "x": 2000,
+    "y": 220,
+    "wires": [
+      [
+        "6aafbec8.acc7c"
+      ]
+    ]
+  }
+]
