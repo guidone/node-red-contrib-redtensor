@@ -3,7 +3,59 @@ const Helpers = require('../libs/helpers');
 const { isModel, isTensor } = Helpers;
 const extractValue = Helpers.extractValue;
 
+
+
+
+
 module.exports = function(RED) {
+
+  function onEpochEnd(node, msg) {
+
+    return function(epoch, logs) {
+
+      node.status({fill: 'yellow', shape: 'ring', text: `Training... ${epoch}/${node.epochs}`});
+      const context = node.context();
+      const epochs = node.epochs;
+      // setup data message
+      const dataMessage = RED.util.cloneMessage(msg);
+      dataMessage.payload = { epoch, logs };
+      // prepare chart messages
+      const chartMessage = RED.util.cloneMessage(msg);
+      const entityToShow = ['loss'];
+      const labels = ['Loss'];
+      const chartValues = [];
+      // dinamically set other entities
+      if (logs.val_loss != null) {
+        entityToShow.push('val_loss');
+        labels.push('Validation loss');
+      }
+      // prepare x labels
+      const xAxisLabels = [];
+      for (var i = 1; i <= epochs; i++) {
+        xAxisLabels.push(`Epoch ${i}`);
+      }
+      // cycle over all entities to show loss and ...
+      entityToShow.forEach(valueName => {
+        let data = context.get(valueName);
+        if (data == null) {
+          data = [];
+        }
+        data.push(logs[valueName]);
+        context.set(valueName, data);
+        chartValues.push(data);
+      });
+      // finally setup message for the dashboard ui chart
+      chartMessage.payload = [{
+        series: labels,
+        data: chartValues,
+        labels: xAxisLabels
+      }];
+
+      node.send([null, dataMessage, chartMessage]);
+    };
+  }
+
+
   function RedTensorTrain(config) {
     RED.nodes.createNode(this, config);
     const node = this;
@@ -22,6 +74,7 @@ module.exports = function(RED) {
 
     this.on('input', function(msg) {
       let model, trainFeatures, trainTarget;
+      const context = node.context();
 
       model = extractValue('model', 'model', msg, node, { store: true });
       trainFeatures = extractValue('tensor', 'trainFeatures', msg, node, { usePayload: false, store: true });
@@ -40,50 +93,42 @@ module.exports = function(RED) {
       }
 
       if (_.isEmpty(missingElements)) {
-        node.status({ fill: 'yellow', shape: 'ring', text: `Training... 0/${node.epochs}` });
-
-
+        // update status
+        node.status({ fill: 'yellow', shape: 'ring', text: `Training... 1/${node.epochs}` });
+        // prepare fit params
         const params = {
           epochs: node.epochs,
           verbose: _.isNumber(node.verbose) ? node.verbose : undefined,
           batchSize: _.isNumber(node.batchSize) ? node.batchSize : undefined,
           validationSplit: _.isNumber(node.validationSplit) ? node.validationSplit : undefined,
-        };
-
-        console.log('Train params', params);
-
-        // set callbacks
-        params.callbacks = {
-          onEpochEnd: (epoch, logs) => {
-            node.status({ fill: 'yellow', shape: 'ring', text: `Training... ${epoch}/${node.epochs}` });
-            msg.payload = { epoch, logs };
-            node.send([null, msg]);
+          callbacks: {
+            onEpochEnd: onEpochEnd(node, msg)
           }
         };
+        //console.log('Train params', _(params).omit('callbacks'));
+
+        // send a reset to the chart, and reset alla stored series
+        node.send([null, null, { ...msg, payload: [] }]);
+        context.set('loss', null);
+        context.set('val_loss', null);
+
         model
           .fit(trainFeatures, trainTarget, params)
           .then(() => {
-            // debug
-            //if (node.debug && model != null) {
-            //  model.summary(160);
-            //}
+
             // show status in UI
             node.status({ fill: 'green', shape: 'ring', text: 'All set' });
             // prepare payload
             const context = node.context();
             context.set('model', null);
+            // todo why all?
             context.set('trainFeatures', null);
             context.set('trainTarget', null);
             msg.payload = model;
-            node.send([msg, null]);
+            node.send([msg, null, null]);
           });
       } else {
         node.status({ fill: 'red', shape: 'ring', text: `Missing ${missingElements.join(', ')}` });
-        // debug
-        //if (node.debug && model != null) {
-        //  model.summary(160);
-        //}
-        // do nothing
       }
     });
   }
