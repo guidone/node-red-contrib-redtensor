@@ -10,3 +10,24 @@
 </p>
 
 This is a very experimental version, no documentation is available at the moment, just experimenting right now.
+
+## Getting started
+
+First of all install [Node-RED](http://nodered.org/docs/getting-started/installation)
+
+```
+$ sudo npm install -g node-red
+```
+
+Then open  the user data directory  `~/.node-red`  and install the package
+
+```
+$ cd ~/.node-red
+$ npm install node-red-contrib-chatbot
+```
+
+Then run
+
+```
+node-red
+```
